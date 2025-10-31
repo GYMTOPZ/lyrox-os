@@ -208,6 +208,13 @@ lyrox-os/
 **¿Resultado final?**
 - LYROX OS corriendo en internet, accesible desde cualquier lugar
 
+**📢 NUEVA FEATURE IMPORTANTE:**
+Pedro preguntó sobre enviar mensajes masivos a usuarios. Documentado en:
+[docs/features/broadcast-messages.md](./docs/features/broadcast-messages.md)
+
+Esto se implementará en **Week 4** cuando hagamos el dashboard de configuración.
+Emilio podrá seleccionar "Leads calificados" y enviarles "¡Oferta 20% hoy!" a todos.
+
 ---
 
 ## 🎓 RECORDATORIO: Filosofía del Proyecto
