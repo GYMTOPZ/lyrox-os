@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Phase 0 - Pilot Development
-Target: November 21, 2025
+Target: December 5, 2025 (Updated from Nov 21)
 
 ---
 
@@ -107,3 +107,37 @@ For Phase 1 (Multi-Tenant Platform):
 
 [Unreleased]: https://github.com/gymtopz/lyrox-os/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/gymtopz/lyrox-os/releases/tag/v0.1.0
+
+## [0.1.1] - 2025-10-31
+
+### Added - Session 1 Part 2
+
+#### Critical Architecture Decision
+- **ADR-004: Avoid Double Work** - Most important decision of the project
+  - Decision: Build multi-tenant architecture from day 1, deploy for single tenant
+  - Problem solved: Eliminates 2-3 weeks of refactoring in Phase 1
+  - Key principle: "Build for Many, Deploy for One, Scale to Many"
+
+#### Documentation Updates
+- Created comprehensive ADR-004 explaining multi-tenant from day 1 approach
+- Updated ADR-002 with clarification (no hard-coding, no refactoring needed)
+- Updated PROJECT_STATUS.md with correct 4-5 week timeline
+- Updated README.md roadmap with accurate milestones
+- Updated session notes with critical decision context
+
+#### Timeline Adjustments
+- Phase 0: Updated from 2-3 weeks to 4-5 weeks
+- Reason: Including dashboard for Pedro to configure (not hard-coding)
+- Phase 1: Reduced effort (only adds signup/billing, core unchanged)
+
+### Context
+Pedro asked the critical question: "¿No sería después doble trabajo?" This led to
+the most important architectural decision: build correctly from day 1 to avoid
+weeks of refactoring later.
+
+The approach ensures:
+- Pedro can configure everything via dashboard
+- No code rewriting needed in Phase 1
+- Architecture validated with real usage
+- Faster path to multi-tenant platform
+

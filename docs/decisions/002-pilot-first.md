@@ -1,9 +1,10 @@
 # ADR-002: Pilot-First Approach
 
 **Date:** 2025-10-31
-**Status:** ✅ Accepted
+**Status:** ✅ Accepted (Clarified - see ADR-004)
 **Deciders:** Pedro Meza (PM/CEO), Claude Code (Tech Lead)
 **Tags:** #strategy #mvp #risk-mitigation
+**Clarified by:** [ADR-004: Avoid Double Work](./004-avoid-double-work.md)
 
 ---
 
@@ -17,9 +18,9 @@ LYROX OS vision is to be a multi-tenant SaaS platform where any business can con
 - Risk: Architecture doesn't fit real business needs
 
 **Option B:** Build for one business first (Emilio Born), then generalize
-- Faster to validation (2-3 weeks)
+- Faster to validation (4-5 weeks)
 - Learn from real usage
-- Risk: Need to refactor for multi-tenant later
+- Risk: Need to refactor for multi-tenant later (mitigated by ADR-004)
 
 ---
 
@@ -27,17 +28,23 @@ LYROX OS vision is to be a multi-tenant SaaS platform where any business can con
 
 **We will start with Phase 0: Pilot for Emilio Born Coaching, then evolve to multi-tenant platform**
 
-### Phase 0 (Weeks 1-3)
-- Build for **single business** (Emilio Born)
-- Hard-code some business-specific logic
-- Simple dashboard (not multi-user)
+**CRITICAL CLARIFICATION (Added 2025-10-31):**
+See [ADR-004](./004-avoid-double-work.md) for detailed approach. TL;DR:
+- **Build multi-tenant architecture from day 1**
+- **Deploy for single tenant (Emilio Born) in Phase 0**
+- **NO refactoring needed in Phase 1** (only adding features)
+
+### Phase 0 (Weeks 1-5) - UPDATED
+- Build with **multi-tenant architecture** (company_id in all tables)
+- Deploy for **single business** (Emilio Born) only
+- Dashboard with configuration (Pedro can edit prompt/products)
 - Focus on **proving the concept works**
 
-### Phase 1 (Weeks 4-12)
-- Refactor to **multi-tenant architecture**
-- Add user authentication system
-- Build onboarding flow
-- Make everything configurable (no hard-coding)
+### Phase 1 (Weeks 6-13) - UPDATED
+- Add **signup and onboarding** for new companies
+- Add **billing system** (Stripe subscriptions)
+- **Core architecture unchanged** (already multi-tenant)
+- Make platform **publicly available**
 
 ---
 

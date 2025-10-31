@@ -69,8 +69,9 @@ Scalability: Limited           Scalability: Infinite
 ## 🚀 Current Status
 
 **Phase:** Phase 0 - Pilot (Emilio Born Coaching)
-**Progress:** 15% - Documentation & Architecture Complete
-**Next Milestone:** WhatsApp Agent MVP (Week 1-2)
+**Progress:** 20% - Documentation & Architecture Complete
+**Timeline:** 4-5 weeks (Nov 1 - Dec 5, 2025)
+**Next Milestone:** Core System with Multi-Tenant Architecture (Week 1-2)
 
 See [PROJECT_STATUS.md](./PROJECT_STATUS.md) for real-time status.
 
@@ -168,26 +169,43 @@ lyrox-os/
 ## 🎯 Roadmap
 
 ### Phase 0: Pilot - Emilio Born Coaching (Current)
-**Timeline:** 2-3 weeks
-**Goal:** Validate concept with real business
+**Timeline:** 4-5 weeks (Nov 1 - Dec 5, 2025)
+**Goal:** Validate concept with real business + build correct architecture
 
+**CRITICAL:** Built with multi-tenant architecture from day 1 (see [ADR-004](./docs/decisions/004-avoid-double-work.md))
+
+**Week 1-2: Core System**
 - ✅ Architecture & documentation
+- 🔨 Multi-tenant database schema
 - 🔨 WhatsApp Customer Acquisition Agent
-- 🔨 Basic finance tracking
-- 🔨 Simple monitoring dashboard
+- 🔨 AI engine with OpenAI
+- 🔨 Message handler with context
+
+**Week 3: Dashboard (Read-Only)**
+- ⏳ Basic authentication
+- ⏳ View conversations real-time
+- ⏳ View metrics
+
+**Week 4: Dashboard (Configuration)**
+- ⏳ Edit brand personality
+- ⏳ Manage products
+- ⏳ Connect WhatsApp via QR
+
+**Week 5: Deploy & Test**
 - ⏳ Deploy to production
-- ⏳ 7-day live test with real customers
+- ⏳ 7-day live test
 
-### Phase 1: Multi-Tenant Platform
-**Timeline:** 8-10 weeks
-**Goal:** Convert to SaaS that others can use
+### Phase 1: Public Multi-Tenant Platform
+**Timeline:** 6-8 weeks (after Phase 0)
+**Goal:** Make platform publicly available
 
-- Multi-tenant architecture
-- User signup/login system
-- Onboarding flow
-- 3 core agents (Acquisition, Finance, Analytics)
-- Professional dashboard
-- Stripe integration for payments
+**Note:** Core architecture unchanged (already multi-tenant)
+
+- Public signup/login
+- Onboarding wizard
+- Billing system (Stripe)
+- Marketing website
+- Multi-user management
 
 ### Phase 2: Advanced Agents
 **Timeline:** 3-4 months

@@ -1,26 +1,28 @@
 # LYROX OS - Project Status
 
-**Last Updated:** 2025-10-31 15:45 UTC
+**Last Updated:** 2025-10-31 18:00 UTC
 **Current Phase:** Phase 0 - Pilot (Emilio Born Coaching)
-**Overall Progress:** 15%
+**Overall Progress:** 20%
+**Timeline:** 4-5 weeks (Nov 1 - Dec 5, 2025)
 **GitHub:** [gymtopz/lyrox-os](https://github.com/gymtopz/lyrox-os)
 
 ---
 
-## 🎯 Current Sprint (Week 1)
+## 🎯 Current Sprint (Session 1)
 
 ### Goals
 - [x] Define complete product vision
 - [x] Design system architecture
 - [x] Create comprehensive documentation structure
-- [x] Initialize GitHub repository
+- [x] Establish Git workflow and conventions
+- [x] **CRITICAL: Decide on multi-tenant from day 1 (ADR-004)**
+- [ ] Complete remaining documentation
 - [ ] Setup project infrastructure (Docker, DBs)
-- [ ] Implement WhatsApp client
-- [ ] First message → AI response working
+- [ ] Initialize code structure
 
 ### Timeline
 - **Started:** October 31, 2025
-- **Target Completion:** November 7, 2025
+- **Target Completion:** November 7, 2025 (Session 1 complete)
 
 ---
 
@@ -82,38 +84,50 @@ None currently - just finished planning phase
 
 ---
 
-## 🎯 Phase 0 Milestones
+## 🎯 Phase 0 Milestones (UPDATED - 4-5 weeks)
 
-### Week 1: Infrastructure & WhatsApp Agent
+### Week 1-2: Core System with Multi-Tenant Architecture
 - [x] Documentation complete
-- [ ] Project structure created
+- [ ] Multi-tenant database schema designed
+- [ ] Project structure created (NestJS + Next.js)
 - [ ] Docker environment running
 - [ ] WhatsApp client connected
+- [ ] AI engine integrated (OpenAI)
+- [ ] Message handler with context system
 - [ ] First automated response working
-- [ ] Database storing conversations
-
-**Target:** November 7, 2025
-**Status:** 🔨 In Progress (15%)
-
-### Week 2: AI Engine & Message Handler
-- [ ] OpenAI integration complete
-- [ ] Context system working (remembers conversations)
-- [ ] Customer name extraction
-- [ ] Product offering logic
-- [ ] E2E flow: New customer → conversation → sale
+- [ ] Database storing conversations (with company_id)
+- [ ] Seed script for Emilio Born company
 
 **Target:** November 14, 2025
-**Status:** ⏳ Not Started
+**Status:** 🔨 In Progress (20%)
 
-### Week 3: Dashboard & Polish
-- [ ] Frontend dashboard deployed
-- [ ] Real-time conversation viewer
-- [ ] Basic metrics (sales, messages)
-- [ ] Finance tracking
-- [ ] Deploy to Railway
-- [ ] 7-day live test
+### Week 3: Dashboard (Read-Only)
+- [ ] Basic authentication (Pedro only)
+- [ ] View conversations in real-time
+- [ ] View metrics (messages today, sales today)
+- [ ] WhatsApp connection status display
 
 **Target:** November 21, 2025
+**Status:** ⏳ Not Started
+
+### Week 4: Dashboard (Configuration)
+- [ ] Edit brand personality via textarea
+- [ ] Add/edit/delete products
+- [ ] Connect WhatsApp via QR code
+- [ ] Changes take effect immediately (no redeploy)
+- [ ] Pedro can configure 100% without Claude
+
+**Target:** November 28, 2025
+**Status:** ⏳ Not Started
+
+### Week 5: Testing & Deploy
+- [ ] End-to-end testing
+- [ ] Deploy to Railway (backend) + Vercel (frontend)
+- [ ] 7-day live test with real customers
+- [ ] Monitor performance and stability
+- [ ] Fix any issues discovered
+
+**Target:** December 5, 2025
 **Status:** ⏳ Not Started
 
 ---
@@ -134,15 +148,14 @@ None currently - just finished planning phase
 
 ### [2025-10-31] ADR-002: Pilot-First Approach
 **Decision:** Build for Emilio Born first, then generalize to platform
-**Status:** ✅ Accepted
+**Status:** ✅ Accepted (Clarified by ADR-004)
 **Link:** [docs/decisions/002-pilot-first.md](./docs/decisions/002-pilot-first.md)
 
 **Rationale:**
 - Validate concept with real business before investing in multi-tenant
 - Learn from real usage patterns
-- Faster to market (2-3 weeks vs 8-10 weeks)
-- De-risk the architecture
-- Can still architect for multi-tenant (just deploy for one initially)
+- Faster to market (4-5 weeks)
+- **CRITICAL:** Build multi-tenant architecture from day 1, deploy for one
 
 ### [2025-10-31] ADR-003: Agent Architecture
 **Decision:** Modular, autonomous agents coordinated by central "Brain"
@@ -155,6 +168,20 @@ None currently - just finished planning phase
 - Shared memory via unified database
 - Central orchestrator coordinates complex workflows
 - Scales to enterprise: add more agents without changing architecture
+
+### [2025-10-31] ADR-004: Avoid Double Work (CRITICAL)
+**Decision:** Build multi-tenant architecture from day 1, deploy for single tenant
+**Status:** ✅ Accepted
+**Link:** [docs/decisions/004-avoid-double-work.md](./docs/decisions/004-avoid-double-work.md)
+
+**Rationale:**
+- Eliminates 2-3 weeks of refactoring in Phase 1
+- Pedro can configure via dashboard (not asking Claude to edit code)
+- Database has company_id from day 1
+- Code reads from configuration, never hard-coded
+- Phase 1 only adds signup/billing (core unchanged)
+
+**Key Principle:** "Build for Many, Deploy for One, Scale to Many"
 
 ---
 
