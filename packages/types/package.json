@@ -1,0 +1,13 @@
+{
+  "name": "@lyrox/types",
+  "version": "0.2.0",
+  "description": "Shared TypeScript types for LYROX OS",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

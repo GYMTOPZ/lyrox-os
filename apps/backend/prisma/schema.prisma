@@ -1,0 +1,282 @@
+// LYROX OS - Prisma Schema
+// Multi-Tenant PostgreSQL Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USERS & COMPANIES
+// ============================================
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String    @map("password_hash")
+  name          String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  lastLogin     DateTime? @map("last_login")
+  emailVerified Boolean   @default(false) @map("email_verified")
+  status        UserStatus @default(ACTIVE)
+
+  companies Company[]
+
+  @@index([email])
+  @@index([status])
+  @@map("users")
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+model Company {
+  id                    String    @id @default(uuid())
+  ownerId               String    @map("owner_id")
+
+  // Business Info
+  name                  String
+  industry              String?
+  website               String?
+
+  // AI Configuration
+  brandPersonality      String    @map("brand_personality") @db.Text
+  systemPrompt          String?   @map("system_prompt") @db.Text
+
+  // WhatsApp
+  whatsappPhone         String?   @unique @map("whatsapp_phone")
+  whatsappConnected     Boolean   @default(false) @map("whatsapp_connected")
+  whatsappSessionData   Json?     @map("whatsapp_session_data")
+  whatsappLastConnected DateTime? @map("whatsapp_last_connected")
+
+  // Status
+  active                Boolean   @default(true)
+  subscriptionPlan      String    @default("free") @map("subscription_plan")
+  subscriptionStatus    String    @default("active") @map("subscription_status")
+
+  // Timestamps
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+
+  // Metadata
+  metadata              Json      @default("{}")
+
+  // Relations
+  owner                 User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  products              Product[]
+  customers             Customer[]
+  sales                 Sale[]
+  agentLogs             AgentLog[]
+  subscriptions         Subscription[]
+
+  @@index([ownerId])
+  @@index([active])
+  @@index([whatsappPhone])
+  @@map("companies")
+}
+
+// ============================================
+// PRODUCTS
+// ============================================
+
+model Product {
+  id              String   @id @default(uuid())
+  companyId       String   @map("company_id")
+
+  // Product Info
+  name            String
+  description     String?  @db.Text
+  price           Decimal  @db.Decimal(10, 2)
+  currency        String   @default("USD")
+
+  // Payment
+  paymentLink     String?  @map("payment_link") @db.Text
+  stripePriceId   String?  @map("stripe_price_id")
+
+  // Status
+  active          Boolean  @default(true)
+
+  // Timestamps
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Metadata
+  metadata        Json     @default("{}")
+
+  // Relations
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  sales           Sale[]
+
+  @@index([companyId])
+  @@index([companyId, active])
+  @@map("products")
+}
+
+// ============================================
+// CUSTOMERS
+// ============================================
+
+model Customer {
+  id                  String   @id @default(uuid())
+  companyId           String   @map("company_id")
+
+  // Customer Info
+  phone               String
+  name                String?
+  email               String?
+
+  // Status
+  stage               CustomerStage @default(LEAD)
+
+  // Metrics
+  firstContact        DateTime @default(now()) @map("first_contact")
+  lastInteraction     DateTime? @map("last_interaction")
+  totalInteractions   Int      @default(0) @map("total_interactions")
+  lifetimeValue       Decimal  @default(0) @map("lifetime_value") @db.Decimal(10, 2)
+
+  // Timestamps
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  // Metadata
+  tags                String[]
+  metadata            Json     @default("{}")
+
+  // Relations
+  company             Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  sales               Sale[]
+  agentLogs           AgentLog[]
+
+  @@unique([companyId, phone])
+  @@index([companyId])
+  @@index([companyId, phone])
+  @@index([companyId, stage])
+  @@index([lastInteraction])
+  @@map("customers")
+}
+
+enum CustomerStage {
+  LEAD
+  QUALIFIED
+  CUSTOMER
+  CHURNED
+}
+
+// ============================================
+// SALES
+// ============================================
+
+model Sale {
+  id              String   @id @default(uuid())
+  companyId       String   @map("company_id")
+  customerId      String   @map("customer_id")
+  productId       String   @map("product_id")
+
+  // Sale Info
+  amount          Decimal  @db.Decimal(10, 2)
+  currency        String   @default("USD")
+
+  // Payment
+  paymentMethod   String?  @map("payment_method")
+  paymentId       String?  @map("payment_id")
+  paymentStatus   PaymentStatus @default(PENDING) @map("payment_status")
+
+  // Timestamps
+  saleDate        DateTime @default(now()) @map("sale_date")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  // Metadata
+  metadata        Json     @default("{}")
+
+  // Relations
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer        Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([companyId])
+  @@index([customerId])
+  @@index([companyId, saleDate])
+  @@index([paymentStatus])
+  @@map("sales")
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+  FAILED
+}
+
+// ============================================
+// AGENT LOGS
+// ============================================
+
+model AgentLog {
+  id              String   @id @default(uuid())
+  companyId       String   @map("company_id")
+
+  // Agent Info
+  agentType       String   @map("agent_type")
+
+  // Event
+  eventType       String   @map("event_type")
+  eventData       Json     @map("event_data")
+
+  // Context
+  customerId      String?  @map("customer_id")
+
+  // Metadata
+  tokensUsed      Int?     @map("tokens_used")
+  responseTimeMs  Int?     @map("response_time_ms")
+
+  // Timestamp
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  // Relations
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer        Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  @@index([companyId])
+  @@index([agentType])
+  @@index([createdAt])
+  @@map("agent_logs")
+}
+
+// ============================================
+// SUBSCRIPTIONS (Phase 1)
+// ============================================
+
+model Subscription {
+  id                    String    @id @default(uuid())
+  companyId             String    @map("company_id")
+
+  // Subscription Info
+  plan                  String
+  status                String
+
+  // Billing
+  stripeCustomerId      String?   @map("stripe_customer_id")
+  stripeSubscriptionId  String?   @map("stripe_subscription_id")
+  currentPeriodStart    DateTime? @map("current_period_start")
+  currentPeriodEnd      DateTime? @map("current_period_end")
+
+  // Timestamps
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+  canceledAt            DateTime? @map("canceled_at")
+
+  // Relations
+  company               Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([stripeCustomerId])
+  @@map("subscriptions")
+}
