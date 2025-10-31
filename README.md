@@ -148,21 +148,24 @@ lyrox-os/
 ## 📚 Documentation
 
 ### For Developers
-- [System Architecture](./docs/architecture/system-architecture.md)
-- [Setup Guide](./docs/development/setup-guide.md)
-- [API Documentation](./docs/architecture/api-documentation.md)
-- [Coding Standards](./docs/development/coding-standards.md)
-- [Testing Strategy](./docs/development/testing-strategy.md)
+- [System Architecture](./docs/architecture/system-architecture.md) - Complete technical architecture
+- [Database Schema](./docs/architecture/database-schema.md) - Multi-tenant database design
+- [API Documentation](./docs/architecture/api-documentation.md) - REST API + WebSocket endpoints
+- [Setup Guide](./docs/development/setup-guide.md) - Local development setup
+- [Git Workflow](./docs/development/git-workflow.md) - Commit conventions and workflow
 
 ### For Product/Business
-- [Product Requirements](./docs/business/product-requirements.md)
-- [Roadmap](./docs/business/roadmap.md)
-- [Emilio Born Config](./docs/business/emilio-born-config.md)
+- [Product Requirements](./docs/business/product-requirements.md) - *(Coming soon)*
+- [Roadmap](./docs/business/roadmap.md) - *(See Roadmap section above)*
 
-### Architecture Decisions
+### Architecture Decisions (ADRs)
 - [ADR-001: Tech Stack Selection](./docs/decisions/001-tech-stack.md)
 - [ADR-002: Pilot-First Approach](./docs/decisions/002-pilot-first.md)
 - [ADR-003: Agent Architecture](./docs/decisions/003-agent-architecture.md)
+- [ADR-004: Avoid Double Work](./docs/decisions/004-avoid-double-work.md) - **CRITICAL**
+
+### Session Notes
+- [Session 001 - Oct 31, 2025](./docs/sessions/session-001-2025-10-31.md) - Project inception
 
 ---
 
