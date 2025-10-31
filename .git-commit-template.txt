@@ -1,0 +1,29 @@
+Session [X] Part [Y]: [TÍTULO DESCRIPTIVO EN IMPERATIVO]
+
+CONTEXTO:
+[Por qué este cambio fue necesario / Qué problema resuelve]
+
+CAMBIOS PRINCIPALES:
+- [Cambio específico 1]
+- [Cambio específico 2]
+- [Cambio específico 3]
+
+DETALLES TÉCNICOS:
+Files modified:
+- path/to/file.ext: +X lines
+- path/to/other.ext: +Y lines
+
+Technical decisions:
+- [Decisión arquitectónica importante]
+- [Trade-off considerado]
+
+IMPACTO:
+[Por qué esto importa / Valor que aporta]
+
+PRÓXIMOS PASOS: (opcional - borrar si no aplica)
+- [ ] Task pendiente 1
+- [ ] Task pendiente 2
+
+---
+Generated with Claude Code
+Co-authored-by: Pedro Meza <pedro@gymtopz>
