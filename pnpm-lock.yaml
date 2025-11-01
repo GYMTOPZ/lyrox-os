@@ -65,11 +65,14 @@ importers:
       ioredis:
         specifier: ^5.3.2
         version: 5.8.2
+      mongodb:
+        specifier: ^6.20.0
+        version: 6.20.0
       mongoose:
         specifier: ^8.0.3
         version: 8.19.2
       openai:
-        specifier: ^4.24.1
+        specifier: ^4.104.0
         version: 4.104.0
       passport:
         specifier: ^0.7.0
@@ -80,6 +83,9 @@ importers:
       qrcode:
         specifier: ^1.5.3
         version: 1.5.4
+      qrcode-terminal:
+        specifier: ^0.12.0
+        version: 0.12.0
       reflect-metadata:
         specifier: ^0.1.14
         version: 0.1.14
@@ -90,7 +96,7 @@ importers:
         specifier: ^4.6.0
         version: 4.8.1
       whatsapp-web.js:
-        specifier: ^1.23.0
+        specifier: ^1.34.1
         version: 1.34.1
     devDependencies:
       '@nestjs/cli':
@@ -8127,6 +8133,11 @@ packages:
   /pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
     dev: true
+
+  /qrcode-terminal@0.12.0:
+    resolution: {integrity: sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==}
+    hasBin: true
+    dev: false
 
   /qrcode@1.5.4:
     resolution: {integrity: sha512-1ca71Zgiu6ORjHqFBDpnSMTR2ReToX4l1Au1VFLyVeBTFavzQnv5JxMFr3ukHVKpSrSA2MCk0lNJSykjUfz7Zg==}
